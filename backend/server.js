@@ -3,7 +3,7 @@ const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const Data = require('./models/user');
+const User = require('./models/user');
 const Post = require('./models/post');
 const Topic = require('./models/topic');
 
@@ -41,6 +41,13 @@ router.get('/getUser', (req, res) => {
   });
 });
 
+router.get('/getPost', (req, res) => {
+  Post.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
 // this is our update method
 // this method overwrites existing data in our database
 router.post('/updateUser', (req, res) => {
@@ -51,11 +58,27 @@ router.post('/updateUser', (req, res) => {
   });
 });
 
+router.post('/updatePost', (req, res) => {
+  const { id, update } = req.body;
+  Post.findByIdAndUpdate(id, update, (err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
 // this is our delete method
 // this method removes existing data in our database
 router.delete('/deleteUser', (req, res) => {
   const { id } = req.body;
   User.findByIdAndRemove(id, (err) => {
+    if (err) return res.send(err);
+    return res.json({ success: true });
+  });
+});
+
+router.delete('/deletePost', (req, res) => {
+  const { id } = req.body;
+  Post.findByIdAndRemove(id, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -75,7 +98,24 @@ router.post('/putUser', (req, res) => {
   user.password = password;
   user.role = role;
   
-  data.save((err) => {
+  user.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+router.post('/putPost', (req, res) => {
+  let post = new Post();
+
+  const { id, firstname, lastname, content, topic } = req.body;
+
+  post.id = id;
+  post.firstname = firstname;
+  post.lastname = lastname;
+  post.content = content;
+  post.topic = topic;
+  
+  post.save((err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
