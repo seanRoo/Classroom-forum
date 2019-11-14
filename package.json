@@ -1,0 +1,24 @@
+{
+  "name": "Classroom-forum",
+  "version": "1.0.0",
+  "description": "A classroom forum application created as part of the HMH TSG-Hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd backend && node server.js\" \"cd forum-frontend && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanRoo/Classroom-forum.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seanRoo/Classroom-forum/issues"
+  },
+  "homepage": "https://github.com/seanRoo/Classroom-forum#readme",
+  "dependencies": {
+    "concurrently": "^5.0.0"
+  }
+}
