@@ -34,8 +34,8 @@ app.use(logger('dev'));
 
 // this is our get method
 // this method fetches all available data in our database
-router.get('/getData', (req, res) => {
-  Data.find((err, data) => {
+router.get('/getUser', (req, res) => {
+  User.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
@@ -43,9 +43,9 @@ router.get('/getData', (req, res) => {
 
 // this is our update method
 // this method overwrites existing data in our database
-router.post('/updateData', (req, res) => {
+router.post('/updateUser', (req, res) => {
   const { id, update } = req.body;
-  Data.findByIdAndUpdate(id, update, (err) => {
+  User.findByIdAndUpdate(id, update, (err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
@@ -53,9 +53,9 @@ router.post('/updateData', (req, res) => {
 
 // this is our delete method
 // this method removes existing data in our database
-router.delete('/deleteData', (req, res) => {
+router.delete('/deleteUser', (req, res) => {
   const { id } = req.body;
-  Data.findByIdAndRemove(id, (err) => {
+  User.findByIdAndRemove(id, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -63,19 +63,18 @@ router.delete('/deleteData', (req, res) => {
 
 // this is our create methid
 // this method adds new data in our database
-router.post('/putData', (req, res) => {
-  let data = new Data();
+router.post('/putUser', (req, res) => {
+  let user = new User();
 
-  const { id, message } = req.body;
+  const { id, username, firstname, lastname, password, role } = req.body;
 
-  if ((!id && id !== 0) || !message) {
-    return res.json({
-      success: false,
-      error: 'INVALID INPUTS',
-    });
-  }
-  data.message = message;
-  data.id = id;
+  user.id = id;
+  user.username = username;
+  user.firstname = firstname;
+  user.lastname = lastname;
+  user.password = password;
+  user.role = role;
+  
   data.save((err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
