@@ -4,6 +4,7 @@ var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./models/user');
+const Post = require('./models/post');
 
 const API_PORT = 3001;
 const app = express();
