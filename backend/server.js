@@ -3,7 +3,9 @@ const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const Data = require('./data');
+const User = require('./models/user');
+const Post = require('./models/post');
+const Topic = require('./models/topic');
 
 const API_PORT = 3001;
 const app = express();
@@ -32,8 +34,22 @@ app.use(logger('dev'));
 
 // this is our get method
 // this method fetches all available data in our database
-router.get('/getData', (req, res) => {
-  Data.find((err, data) => {
+router.get('/getUser', (req, res) => {
+  User.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
+router.get('/getPost', (req, res) => {
+  Post.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
+router.get('/getTopic', (req, res) => {
+  Topic.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
@@ -41,9 +57,25 @@ router.get('/getData', (req, res) => {
 
 // this is our update method
 // this method overwrites existing data in our database
-router.post('/updateData', (req, res) => {
+router.post('/updateUser', (req, res) => {
   const { id, update } = req.body;
-  Data.findByIdAndUpdate(id, update, (err) => {
+  User.findByIdAndUpdate(id, update, (err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+router.post('/updatePost', (req, res) => {
+  const { id, update } = req.body;
+  Post.findByIdAndUpdate(id, update, (err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+router.post('/updateTopic', (req, res) => {
+  const { id, update } = req.body;
+  Topic.findByIdAndUpdate(id, update, (err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
@@ -51,9 +83,25 @@ router.post('/updateData', (req, res) => {
 
 // this is our delete method
 // this method removes existing data in our database
-router.delete('/deleteData', (req, res) => {
+router.delete('/deleteUser', (req, res) => {
   const { id } = req.body;
-  Data.findByIdAndRemove(id, (err) => {
+  User.findByIdAndRemove(id, (err) => {
+    if (err) return res.send(err);
+    return res.json({ success: true });
+  });
+});
+
+router.delete('/deletePost', (req, res) => {
+  const { id } = req.body;
+  Post.findByIdAndRemove(id, (err) => {
+    if (err) return res.send(err);
+    return res.json({ success: true });
+  });
+});
+
+router.delete('/deleteTopic', (req, res) => {
+  const { id } = req.body;
+  Topic.findByIdAndRemove(id, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -61,20 +109,53 @@ router.delete('/deleteData', (req, res) => {
 
 // this is our create methid
 // this method adds new data in our database
-router.post('/putData', (req, res) => {
-  let data = new Data();
+router.post('/putUser', (req, res) => {
+  let user = new User();
 
-  const { id, message } = req.body;
+  const { id, username, firstname, lastname, password, role } = req.body;
 
-  if ((!id && id !== 0) || !message) {
-    return res.json({
-      success: false,
-      error: 'INVALID INPUTS',
-    });
-  }
-  data.message = message;
-  data.id = id;
-  data.save((err) => {
+  user.id = id;
+  user.username = username;
+  user.firstname = firstname;
+  user.lastname = lastname;
+  user.password = password;
+  user.role = role;
+  
+  user.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+router.post('/putPost', (req, res) => {
+  let post = new Post();
+
+  const { id, firstname, lastname, content, topic } = req.body;
+
+  post.id = id;
+  post.firstname = firstname;
+  post.lastname = lastname;
+  post.content = content;
+  post.topic = topic;
+  
+  post.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+router.post('/putTopic', (req, res) => {
+  let topic = new Topic();
+
+  const { id, title, bodytext, totalposts, category} = req.body;
+
+  topic.id = id;
+  topic.title = title;
+  topic.bodytext = bodytext;
+  topic.totalposts = totalposts;
+  topic.category = category;
+  
+  topic.save((err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
