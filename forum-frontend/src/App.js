@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import CreatePost from './CreatePost';
-import TopicHeader from "./TopicHeader";
+import TopicBar from "./TopicBar";
 import TopicPage from "./TopicPage";
 import Header from "./Header";
+import PostTopic from "./PostTopic";
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
       <div>
         <Header/>
         <TopicPage/>
+        <PostTopic/>
       </div>
     );
   }
