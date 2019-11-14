@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./models/user');
 const Post = require('./models/post');
+const Topic = require('./models/topic');
 
 const API_PORT = 3001;
 const app = express();
