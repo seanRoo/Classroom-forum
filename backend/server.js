@@ -112,9 +112,8 @@ router.delete('/deleteTopic', (req, res) => {
 router.post('/putUser', (req, res) => {
   let user = new User();
 
-  const { id, username, firstname, lastname, password, role } = req.body;
+  const { username, firstname, lastname, password, role } = req.body;
 
-  user.id = id;
   user.username = username;
   user.firstname = firstname;
   user.lastname = lastname;
@@ -130,9 +129,8 @@ router.post('/putUser', (req, res) => {
 router.post('/putPost', (req, res) => {
   let post = new Post();
 
-  const { id, firstname, lastname, content, topic } = req.body;
+  const { firstname, lastname, content, topic } = req.body;
 
-  post.id = id;
   post.firstname = firstname;
   post.lastname = lastname;
   post.content = content;
@@ -147,12 +145,10 @@ router.post('/putPost', (req, res) => {
 router.post('/putTopic', (req, res) => {
   let topic = new Topic();
 
-  const { id, title, bodytext, totalposts, category} = req.body;
+  const {title, bodytext, category} = req.body;
 
-  topic.id = id;
   topic.title = title;
   topic.bodytext = bodytext;
-  topic.totalposts = totalposts;
   topic.category = category;
   
   topic.save((err) => {
