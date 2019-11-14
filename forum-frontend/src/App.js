@@ -1,8 +1,14 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import CreatePost from './CreatePost';
 
 class App extends Component {
   render() {
-    return <div>I'M READY TO USE THE BACK END APIS! :-)</div>;
+    return (
+      <div>
+        <CreatePost />
+      </div>
+    );
   }
 }
 
