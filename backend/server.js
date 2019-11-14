@@ -48,6 +48,13 @@ router.get('/getPost', (req, res) => {
   });
 });
 
+router.get('/getTopic', (req, res) => {
+  Topic.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
 // this is our update method
 // this method overwrites existing data in our database
 router.post('/updateUser', (req, res) => {
@@ -66,6 +73,14 @@ router.post('/updatePost', (req, res) => {
   });
 });
 
+router.post('/updateTopic', (req, res) => {
+  const { id, update } = req.body;
+  Topic.findByIdAndUpdate(id, update, (err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
 // this is our delete method
 // this method removes existing data in our database
 router.delete('/deleteUser', (req, res) => {
@@ -79,6 +94,14 @@ router.delete('/deleteUser', (req, res) => {
 router.delete('/deletePost', (req, res) => {
   const { id } = req.body;
   Post.findByIdAndRemove(id, (err) => {
+    if (err) return res.send(err);
+    return res.json({ success: true });
+  });
+});
+
+router.delete('/deleteTopic', (req, res) => {
+  const { id } = req.body;
+  Topic.findByIdAndRemove(id, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -116,6 +139,23 @@ router.post('/putPost', (req, res) => {
   post.topic = topic;
   
   post.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+router.post('/putTopic', (req, res) => {
+  let topic = new Topic();
+
+  const { id, title, bodytext, totalposts, category} = req.body;
+
+  topic.id = id;
+  topic.title = title;
+  topic.bodytext = bodytext;
+  topic.totalposts = totalposts;
+  topic.category = category;
+  
+  topic.save((err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
