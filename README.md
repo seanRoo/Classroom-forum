@@ -28,3 +28,31 @@ In order to develop a classroom forum that allows fluid and fast environment of 
   -	Material UI - React UI framework for faster and easier web development
 
 The development platform contains backend and frontend (client) sides of the application. The backend is developed with Node.js using JavaScript language and Express framework. The server storing data in the MongoDB database and is hosted at MongoDB Atlas. To communicate with MongoDB database application using mongoose. The frontend is developed using React and Material UI.
+
+## Run on local machine
+
+1.  Clone repository to local machine using:
+
+```
+git clone https://github.com/seanRoo/Classroom-forum.git
+```
+
+2.  Go into the application folder:
+
+```
+cd Classroom-forum
+```
+
+3.  Install dependencies using`npm` command line tool:
+
+```
+npm install
+```
+
+4.  Run the application, again using `npm`:
+
+```
+npm start
+```
+
+This will open a new browser tab/window with the application running.
